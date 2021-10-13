@@ -1,7 +1,7 @@
 {
   "title": "work",
   "packageName": "org.cocos2d.demo",
-  "startScene": "918b99dc-3df1-408a-9e2d-51c65696dff8",
+  "startScene": "1393b929-3009-4064-8487-84b599db0130",
   "excludeScenes": [],
   "orientation": {
     "landscapeRight": true,
@@ -12,7 +12,7 @@
   "webOrientation": "auto",
   "inlineSpriteFrames": true,
   "inlineSpriteFrames_native": true,
-  "mainCompressionType": "default",
+  "mainCompressionType": "merge_all_json",
   "mainIsRemote": false,
   "optimizeHotUpdate": false,
   "md5Cache": true,

@@ -1,14 +1,22 @@
 {
   "group-list": [
     "default",
-    "Player"
+    "Player",
+    "Props"
   ],
   "collision-matrix": [
     [
       true,
+      true,
       true
     ],
     [
+      true,
+      false,
+      true
+    ],
+    [
+      true,
       true,
       false
     ]
@@ -38,5 +46,6 @@
     "audience": {
       "enable": false
     }
-  }
+  },
+  "last-module-event-record-time": 1633577973325
 }
