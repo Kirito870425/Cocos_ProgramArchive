@@ -157,8 +157,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 1920,
-      "height": 1080
+      "width": 0,
+      "height": 0
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -492,7 +492,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Player2",
+    "_name": "Enemy",
     "_objFlags": 0,
     "_parent": {
       "__id__": 7

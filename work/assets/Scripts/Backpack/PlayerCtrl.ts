@@ -15,9 +15,7 @@ export default class PlayerCtrl extends cc.Component {
     onCollisionEnter(other: cc.BoxCollider, self: cc.Node) {
         if (other.node.group == "Props") {
             this.PropsArray.push(other.getComponent(cc.Sprite));
-
         }
-
     }
 
     onKeyUp(event) {

@@ -175,8 +175,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 1080,
-      "height": 540
+      "width": 0,
+      "height": 0
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -1647,7 +1647,7 @@
     },
     "component": "",
     "_componentId": "2b75cdVm6RLR60qWUmFs4go",
-    "handler": "OnButton",
+    "handler": "onButton",
     "customEventData": "Lobby"
   }
 ]

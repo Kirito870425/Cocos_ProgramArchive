@@ -3,12 +3,12 @@ import { playerCtrl } from "./PlayerCtrl";
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class BackpackBox extends cc.Component {
+export default class BackpackInit extends cc.Component {
 
     @property(cc.Prefab)
     private boxPrefab: cc.Node = null;
     onLoad() {
-        backpackBox = this;
+        backpackInit = this;
         for (let i = 0; i < 50; i++) {
             let box = cc.instantiate(this.boxPrefab);
             this.node.addChild(box);
@@ -23,4 +23,4 @@ export default class BackpackBox extends cc.Component {
     }
 }
 
-export let backpackBox = new BackpackBox();
+export let backpackInit = new BackpackInit();

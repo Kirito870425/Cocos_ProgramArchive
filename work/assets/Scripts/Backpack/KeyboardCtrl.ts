@@ -1,10 +1,10 @@
-import { backpackBox } from "./BackpackBox";
+import { backpackInit } from "./BackpackInit";
 import { playerCtrl } from "./PlayerCtrl";
 
 const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class BackpackButton extends cc.Component {
+export default class KeyboardCtrl extends cc.Component {
 
     private backpack: cc.Node;
     private equipment: cc.Node;
@@ -21,20 +21,18 @@ export default class BackpackButton extends cc.Component {
             case "I":
                 this.isBackpack = !this.isBackpack;
                 this.backpack.active = this.isBackpack;
-                backpackBox.getItem();
+                backpackInit.getItem();
                 break;
             case "O":
                 this.isEquipment = !this.isEquipment;
                 this.equipment.active = this.isEquipment;
                 break;
-
-
             default:
                 break;
         }
     }
 
-    OnButton(e, data) {
+    onButton(e, data) {
         switch (data) {
             case "BackpackClose":
                 this.isBackpack = !this.isBackpack;
