@@ -1,5 +1,3 @@
-import { propsInit } from "../Backpack/PropsInit";
-
 
 const { ccclass, property } = cc._decorator;
 
@@ -12,6 +10,9 @@ export default class Sudoku extends cc.Component {
     private InputIndex: number = 0;
 
     private sudokuArray: Array<Array<string>> =
+        [["5", "3", ".", ".", "7", ".", ".", ".", "."], ["6", ".", ".", "1", "9", "5", ".", ".", "."], [".", "9", "8", ".", ".", ".", ".", "6", "."], ["8", ".", ".", ".", "6", ".", ".", ".", "3"], ["4", ".", ".", "8", ".", "3", ".", ".", "1"], ["7", ".", ".", ".", "2", ".", ".", ".", "6"], [".", "6", ".", ".", ".", ".", "2", "8", "."], [".", ".", ".", "4", "1", "9", ".", ".", "5"], [".", ".", ".", ".", "8", ".", ".", "7", "9"]];
+
+    private colArray =
         [["", "", "", "", "", "", "", "", ""],
         ["", "", "", "", "", "", "", "", ""],
         ["", "", "", "", "", "", "", "", ""],
@@ -23,34 +24,23 @@ export default class Sudoku extends cc.Component {
         ["", "", "", "", "", "", "", "", ""]];
 
     onLoad() {
-        // 符合規則，R全部，+限制
         for (let i = 0; i < 81; i++) {
-            let sudokuLabel = cc.instantiate(this.SudokuLabel);
-            // sudokuLabel.name = i.toString();
-            sudokuLabel.getComponent(cc.Label).string = "";
-            this.node.addChild(sudokuLabel);
+            let Label = cc.instantiate(this.SudokuLabel);
+            Label.getComponent(cc.Label).string = this.sudokuArray[this.sudokuTakeTheQuotient(i)][this.sudokuTakeTheRemainder(i)];
+            this.node.addChild(Label);
+            Label.on("click", () => {
+                console.log("click");
+
+            });
         }
 
-        for (let j = 0; j < this.InputIndex; j++) {
-
-            this.createOfRule();
-        }
-
-        for (let i = 0; i < 9; i++) {
-            for (let j = 0; j < 9; j++) {
-            }
-            this.colArray.push(this.sudokuArray[this.sudokuTakeTheQuotient(j)][this.sudokuTakeTheRemainder(i)]);
-            // console.log("===j===" + j, "===i===" + i);
-            console.log("===i===" + i);
-        }
-        console.log("this.colArray===" + this.colArray);
-
-        // this.solveSudoku([["5", "3", ".", ".", "7", ".", ".", ".", "."], ["6", ".", ".", "1", "9", "5", ".", ".", "."], [".", "9", "8", ".", ".", ".", ".", "6", "."], ["8", ".", ".", ".", "6", ".", ".", ".", "3"], ["4", ".", ".", "8", ".", "3", ".", ".", "1"], ["7", ".", ".", ".", "2", ".", ".", ".", "6"], [".", "6", ".", ".", ".", ".", "2", "8", "."], [".", ".", ".", "4", "1", "9", ".", ".", "5"], [".", ".", ".", ".", "8", ".", ".", "7", "9"]]);
-        // console.log("=sudokuArray=" + this.sudokuArray);
-
+        // this.solveSudoku(this.sudokuArray);
+        // for (let j = 0; j < this.InputIndex; j++) {
+        //     this.createOfRule();
+        // }
     }
 
-
+    /**答案，看無 */
     solveSudoku(board: string[][]): void {
         const candidates = "123456789";
         const isLegal = (row: number, col: number): boolean => {
@@ -100,7 +90,11 @@ export default class Sudoku extends cc.Component {
                 board[row][col] = cand;
                 if (isLegal(row, col)) {
                     backtracking(...getNextPos(row, col));
+                    // this.node.children[cand].getComponent(cc.Label).string = cand;
+                    // 答案
+                    // console.log("board==" + board);
                 }
+
                 if (done) return;
                 board[row][col] = ".";
             }
@@ -108,6 +102,47 @@ export default class Sudoku extends cc.Component {
 
         backtracking(0, 0);
     }
+
+    /**規則 */
+    condition(r: number, rText: number) {
+        this.colStore();
+
+        if (this.node.children[r].getComponent(cc.Label).string == "" &&
+            this.sudokuArray[this.sudokuTakeTheQuotient(r)].indexOf(rText.toString()) == -1 &&
+            this.colArray[this.sudokuTakeTheQuotient(r)].indexOf(rText.toString()) == -1
+        ) {
+            this.node.children[r].getComponent(cc.Label).string = rText.toString();
+
+        }
+
+        else {
+            this.createOfRule();
+        }
+    }
+
+    /**直行計算 */
+    colStore() {
+        let temp = "";
+        for (let i = 0; i < 9; i++) {
+            for (let j = 0; j < 9; j++) {
+                temp = this.sudokuArray[this.sudokuTakeTheRemainder(j)][this.sudokuTakeTheQuotient(i * 9)];
+                this.colArray[i].push(temp);
+            }
+            // console.log("" + this.colArray[i]);
+
+        }
+    }
+
+    /**基礎陣列 */
+    createOfRule() {
+        let r = this.getRandom(0, 81);
+        let rText = this.getRandom(1, 9);
+
+        this.sudokuArray[this.sudokuTakeTheQuotient(r)][this.sudokuTakeTheRemainder(r)] = rText.toString();
+        this.condition(r, rText);
+    }
+
+
 
     // isValidSudoku(board: string[][]): boolean {
     //     let state = new Set();
@@ -138,31 +173,6 @@ export default class Sudoku extends cc.Component {
 
     //     return true;
     // }
-
-
-    private colArray = [];
-    createOfRule() {
-        let r = this.getRandom(0, 81);
-        let rText = this.getRandom(1, 9);
-        // console.log("===要加的行===" + this.sudokuTakeTheQuotient(r),
-        //     "===哪一行陣列===" + this.sudokuArray[this.sudokuTakeTheQuotient(r)],
-        //     "===要加的值===" + rText.toString());
-        // 在for一次0~8存到arr在比較
-
-
-
-        if (this.node.children[r].getComponent(cc.Label).string == "" && this.sudokuArray[this.sudokuTakeTheQuotient(r)].indexOf(rText.toString()) == -1) {
-
-            // if (this.node.children[r].getComponent(cc.Label).string == "") {
-            this.sudokuArray[this.sudokuTakeTheQuotient(r)][this.sudokuTakeTheRemainder(r)] = rText.toString();
-            this.node.children[r].getComponent(cc.Label).string = rText.toString();
-
-        }
-        else {
-            this.createOfRule();
-        }
-
-    }
 
     sudokuTakeTheQuotient(r: number): number {
         let temp = Math.floor(r / 9);
