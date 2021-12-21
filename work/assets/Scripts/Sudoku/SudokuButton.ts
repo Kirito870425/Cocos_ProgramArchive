@@ -9,9 +9,11 @@ export default class SudokuButton extends cc.Component {
     private playerButton: cc.Node = null;
 
     onLoad() {
+        sudoluButton = this;
         this.CreatePrefab(11, this.playerButton, true);
     }
 
+    public ButtonString = "";
     CreatePrefab(arraylength: number, prefab: cc.Node, isButton: boolean) {
         for (let i = 0; i < arraylength; i++) {
             if (this.node.name == "ButtonLayout" && i == 0)
@@ -27,6 +29,12 @@ export default class SudokuButton extends cc.Component {
                 prefabTemp.getChildByName("Label").getComponent(cc.Label).string = "刪除";
 
             this.node.addChild(prefabTemp);
+
+            prefabTemp.on("click", () => {
+                this.ButtonString = i.toString();
+            });
         }
     }
 }
+
+export let sudoluButton = new SudokuButton();

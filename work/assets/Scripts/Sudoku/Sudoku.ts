@@ -1,3 +1,4 @@
+import { sudoluButton } from "./SudokuButton";
 
 const { ccclass, property } = cc._decorator;
 
@@ -23,23 +24,67 @@ export default class Sudoku extends cc.Component {
         ["", "", "", "", "", "", "", "", ""],
         ["", "", "", "", "", "", "", "", ""]];
 
+
+    public ButtonBoolean = true;
     onLoad() {
         for (let i = 0; i < 81; i++) {
             let Label = cc.instantiate(this.SudokuLabel);
             Label.getComponent(cc.Label).string = this.sudokuArray[this.sudokuTakeTheQuotient(i)][this.sudokuTakeTheRemainder(i)];
             this.node.addChild(Label);
-            Label.on("click", () => {
-                console.log("click");
 
-            });
+            if (this.buttonCtrl(Label.getComponent(cc.Label).string == ".")) {
+                Label.color = cc.color(0, 0, 255);
+                Label.on("click", () => {
+                    // 可變數字
+                    this.node.parent.getChildByName("Wall").active = this.ButtonBoolean;
+                    Label.getComponent(cc.Label).string = sudoluButton.ButtonString;
+                    this.sudokuArray[this.sudokuTakeTheQuotient(i)][this.sudokuTakeTheRemainder(i)] = sudoluButton.ButtonString;
+
+                    // if (this.testboolean)
+                    this.AnsCtrl(this.sudokuArray, this.AnsArray);
+
+                    // this.testboolean = true;
+                });;
+            }
+            else {
+                Label.on("click", () => {
+                    // 固定數字
+                    this.node.parent.getChildByName("Wall").active = !this.ButtonBoolean;
+                });
+            }
         }
 
-        // this.solveSudoku(this.sudokuArray);
-        // for (let j = 0; j < this.InputIndex; j++) {
-        //     this.createOfRule();
-        // }
+        this.solveSudoku(this.sudokuArray);
     }
 
+    buttonCtrl(isblank: boolean) {
+        this.ButtonBoolean = isblank;
+        return isblank;
+    }
+
+    private testboolean = false;
+    AnsCtrl(player: Array<Array<string>>, ans: Array<Array<string>>) {
+        // console.log("player == ans=====" + (player == ans));
+        console.log("player==" + player);
+        console.log("ans==" + ans);
+
+        // if (player == ans)
+        // this.node.parent.getChildByName("Pass").active = true;
+        // this.node.parent.getChildByName("Pass").getChildByName("Text").getComponent(cc.Label).string = "你過關了~";
+        // else
+        //     this.node.parent.getChildByName("Pass").getChildByName("Text").getComponent(cc.Label).string = "未過關~";
+    }
+
+    private AnsArray =
+        [["", "", "", "", "", "", "", "", ""],
+        ["", "", "", "", "", "", "", "", ""],
+        ["", "", "", "", "", "", "", "", ""],
+        ["", "", "", "", "", "", "", "", ""],
+        ["", "", "", "", "", "", "", "", ""],
+        ["", "", "", "", "", "", "", "", ""],
+        ["", "", "", "", "", "", "", "", ""],
+        ["", "", "", "", "", "", "", "", ""],
+        ["", "", "", "", "", "", "", "", ""]];
     /**答案，看無 */
     solveSudoku(board: string[][]): void {
         const candidates = "123456789";
@@ -90,6 +135,7 @@ export default class Sudoku extends cc.Component {
                 board[row][col] = cand;
                 if (isLegal(row, col)) {
                     backtracking(...getNextPos(row, col));
+                    this.AnsArray = board;
                     // this.node.children[cand].getComponent(cc.Label).string = cand;
                     // 答案
                     // console.log("board==" + board);
@@ -141,38 +187,6 @@ export default class Sudoku extends cc.Component {
         this.sudokuArray[this.sudokuTakeTheQuotient(r)][this.sudokuTakeTheRemainder(r)] = rText.toString();
         this.condition(r, rText);
     }
-
-
-
-    // isValidSudoku(board: string[][]): boolean {
-    //     let state = new Set();
-    //     const side = 9;
-
-    //     for (let row = 0; row < side; row++) {
-    //         for (let column = 0; column < side; column++) {
-    //             const value = board[row][column];
-    //             if (value === ".") continue;
-    //             const rowRecord = `row ${row} value ${value}`;
-    //             const columnRecord = `column ${column} value ${value}`;
-    //             const boxRecord = `box ${Math.floor(row / 3)} / ${Math.floor(column / 3)} value ${value}`;
-
-    //             // console.log("state===" + state.has(rowRecord), "===" + state.has(columnRecord), "====" + state.has(boxRecord));
-    //             if (state.has(rowRecord) || state.has(columnRecord) || state.has(boxRecord)) {
-    //                 console.log("faaaaaaaaaa");
-    //                 return false;
-    //             }
-    //             // console.log("rowRecord===" + rowRecord);
-    //             // console.log("columnRecord===" + columnRecord);
-    //             // console.log("boxRecord===" + boxRecord);
-
-    //             state.add(rowRecord).add(columnRecord).add(boxRecord);
-    //         }
-    //     }
-
-    //     console.log("trrrrrrrrrr");
-
-    //     return true;
-    // }
 
     sudokuTakeTheQuotient(r: number): number {
         let temp = Math.floor(r / 9);
