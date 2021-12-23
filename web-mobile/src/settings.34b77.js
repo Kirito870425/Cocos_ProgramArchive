@@ -1,0 +1,1 @@
+window._CCSettings={platform:"web-mobile",groupList:["default","Player","Props"],collisionMatrix:[[true,true,true],[true,true,true],[true,true,true]],hasResourcesBundle:false,hasStartSceneBundle:false,remoteBundles:[],subpackages:[],launchScene:"db://assets/Sence/Lobby.fire",orientation:"",jsList:[],bundleVers:{internal:"198ac",Props:"37ef3",main:"5d5be"}};
