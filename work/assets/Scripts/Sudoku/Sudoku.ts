@@ -40,11 +40,8 @@ export default class Sudoku extends cc.Component {
                     Label.getComponent(cc.Label).string = sudoluButton.ButtonString;
                     this.sudokuArray[this.sudokuTakeTheQuotient(i)][this.sudokuTakeTheRemainder(i)] = sudoluButton.ButtonString;
 
-                    // if (this.testboolean)
                     this.AnsCtrl(this.sudokuArray, this.AnsArray);
-
-                    // this.testboolean = true;
-                });;
+                });
             }
             else {
                 Label.on("click", () => {
@@ -64,7 +61,6 @@ export default class Sudoku extends cc.Component {
 
     private testboolean = false;
     AnsCtrl(player: Array<Array<string>>, ans: Array<Array<string>>) {
-        // console.log("player == ans=====" + (player == ans));
         console.log("player==" + player);
         console.log("ans==" + ans);
 
