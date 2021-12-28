@@ -309,6 +309,9 @@
       },
       {
         "__id__": 79
+      },
+      {
+        "__id__": 80
       }
     ],
     "_prefab": null,
@@ -3730,5 +3733,15 @@
     "_N$alphaThreshold": 0.1,
     "_N$inverted": true,
     "_id": "3eqsjw/TBFQqVL1gwi6zD4"
+  },
+  {
+    "__type__": "ddbbcxMVmRIroO1imF+A8o4",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 8
+    },
+    "_enabled": true,
+    "_id": "91IIhnZFVIFrDEpsBqjPZ5"
   }
 ]
